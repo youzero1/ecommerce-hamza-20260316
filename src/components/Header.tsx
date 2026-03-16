@@ -13,13 +13,13 @@ export default function Header() {
           ShopNext
         </Link>
         <nav className="flex items-center gap-6">
-          <Link href="/" className="text-gray-600 hover:text-gray-900 font-medium">
+          <Link href="/" className="text-gray-600 hover:text-blue-600 font-medium">
             Shop
           </Link>
-          <Link href="/admin" className="text-gray-600 hover:text-gray-900 font-medium">
+          <Link href="/admin" className="text-gray-600 hover:text-blue-600 font-medium">
             Admin
           </Link>
-          <Link href="/cart" className="relative text-gray-600 hover:text-gray-900">
+          <Link href="/cart" className="relative text-gray-600 hover:text-blue-600">
             <span className="text-2xl">🛒</span>
             {totalItems > 0 && (
               <span className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
