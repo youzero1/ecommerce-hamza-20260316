@@ -1,9 +1,8 @@
-import 'reflect-metadata';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Order } from './Order';
 import { Product } from './Product';
 
-@Entity('order_items')
+@Entity()
 export class OrderItem {
   @PrimaryGeneratedColumn()
   id!: number;
