@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import { ProductType, CartItem } from '@/lib/types';
 
 interface CartContextType {
@@ -17,25 +17,23 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
-  const [loaded, setLoaded] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     try {
       const saved = localStorage.getItem('cart');
       if (saved) {
         setItems(JSON.parse(saved));
       }
-    } catch {
-      // ignore
-    }
-    setLoaded(true);
+    } catch {}
   }, []);
 
   useEffect(() => {
-    if (loaded) {
+    if (mounted) {
       localStorage.setItem('cart', JSON.stringify(items));
     }
-  }, [items, loaded]);
+  }, [items, mounted]);
 
   const addItem = useCallback((product: ProductType, quantity: number = 1) => {
     setItems((prev) => {
@@ -58,13 +56,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const updateQuantity = useCallback((productId: number, quantity: number) => {
     if (quantity <= 0) {
       setItems((prev) => prev.filter((i) => i.product.id !== productId));
-      return;
+    } else {
+      setItems((prev) =>
+        prev.map((i) =>
+          i.product.id === productId ? { ...i, quantity } : i
+        )
+      );
     }
-    setItems((prev) =>
-      prev.map((i) =>
-        i.product.id === productId ? { ...i, quantity } : i
-      )
-    );
   }, []);
 
   const clearCart = useCallback(() => {
@@ -72,11 +70,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const subtotal = items.reduce(
-    (sum, item) => sum + Number(item.product.price) * item.quantity,
+    (sum, i) => sum + Number(i.product.price) * i.quantity,
     0
   );
 
-  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
+  const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
 
   return (
     <CartContext.Provider
