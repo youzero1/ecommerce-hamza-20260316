@@ -9,9 +9,7 @@ const nextConfig = {
       },
     ],
   },
-  experimental: {
-    serverComponentsExternalPackages: ['typeorm', 'sql.js'],
-  },
+  serverExternalPackages: ['typeorm', 'sql.js'],
   webpack: (config, { isServer }) => {
     if (isServer) {
       config.externals = config.externals || [];
