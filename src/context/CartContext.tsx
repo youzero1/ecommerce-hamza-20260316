@@ -1,11 +1,11 @@
 'use client';
 
 import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
-import { ProductType, CartItem } from '@/lib/types';
+import { CartItem, ProductType } from '@/lib/types';
 
 interface CartContextType {
   items: CartItem[];
-  addItem: (product: ProductType, quantity?: number) => void;
+  addItem: (product: ProductType) => void;
   removeItem: (productId: number) => void;
   updateQuantity: (productId: number, quantity: number) => void;
   clearCart: () => void;
@@ -18,17 +18,17 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
 
-  const addItem = useCallback((product: ProductType, quantity: number = 1) => {
+  const addItem = useCallback((product: ProductType) => {
     setItems((prev) => {
       const existing = prev.find((i) => i.product.id === product.id);
       if (existing) {
         return prev.map((i) =>
           i.product.id === product.id
-            ? { ...i, quantity: i.quantity + quantity }
+            ? { ...i, quantity: i.quantity + 1 }
             : i
         );
       }
-      return [...prev, { product, quantity }];
+      return [...prev, { product, quantity: 1 }];
     });
   }, []);
 
@@ -39,13 +39,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const updateQuantity = useCallback((productId: number, quantity: number) => {
     if (quantity <= 0) {
       setItems((prev) => prev.filter((i) => i.product.id !== productId));
-      return;
+    } else {
+      setItems((prev) =>
+        prev.map((i) =>
+          i.product.id === productId ? { ...i, quantity } : i
+        )
+      );
     }
-    setItems((prev) =>
-      prev.map((i) =>
-        i.product.id === productId ? { ...i, quantity } : i
-      )
-    );
   }, []);
 
   const clearCart = useCallback(() => {
