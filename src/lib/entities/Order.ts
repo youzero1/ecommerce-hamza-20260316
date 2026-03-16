@@ -1,8 +1,7 @@
-import 'reflect-metadata';
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 import { OrderItem } from './OrderItem';
 
-@Entity('orders')
+@Entity()
 export class Order {
   @PrimaryGeneratedColumn()
   id!: number;
