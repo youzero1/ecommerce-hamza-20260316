@@ -4,12 +4,13 @@ import { Product } from '@/lib/entities/Product';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const ds = await getDataSource();
     const repo = ds.getRepository(Product);
-    const product = await repo.findOne({ where: { id: parseInt(params.id) } });
+    const product = await repo.findOne({ where: { id: parseInt(id) } });
     if (!product) {
       return NextResponse.json({ error: 'Product not found' }, { status: 404 });
     }
@@ -21,12 +22,13 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const ds = await getDataSource();
     const repo = ds.getRepository(Product);
-    const product = await repo.findOne({ where: { id: parseInt(params.id) } });
+    const product = await repo.findOne({ where: { id: parseInt(id) } });
     if (!product) {
       return NextResponse.json({ error: 'Product not found' }, { status: 404 });
     }
@@ -41,12 +43,13 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const ds = await getDataSource();
     const repo = ds.getRepository(Product);
-    const product = await repo.findOne({ where: { id: parseInt(params.id) } });
+    const product = await repo.findOne({ where: { id: parseInt(id) } });
     if (!product) {
       return NextResponse.json({ error: 'Product not found' }, { status: 404 });
     }
