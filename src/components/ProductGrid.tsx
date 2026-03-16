@@ -21,6 +21,7 @@ export default function ProductGrid({ category, search, sort }: ProductGridProps
     if (search) params.set('search', search);
     if (sort) params.set('sort', sort);
 
+    setLoading(true);
     fetch(`/api/products?${params.toString()}`)
       .then((r) => r.json())
       .then((data) => {
@@ -34,10 +35,10 @@ export default function ProductGrid({ category, search, sort }: ProductGridProps
   if (loading) {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {[...Array(6)].map((_, i) => (
+        {Array.from({ length: 6 }).map((_, i) => (
           <div key={i} className="card animate-pulse">
             <div className="aspect-square bg-gray-200" />
-            <div className="p-4 space-y-3">
+            <div className="p-4 space-y-2">
               <div className="h-4 bg-gray-200 rounded w-1/3" />
               <div className="h-5 bg-gray-200 rounded w-2/3" />
               <div className="h-4 bg-gray-200 rounded w-full" />
