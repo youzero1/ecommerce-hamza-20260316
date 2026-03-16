@@ -31,9 +31,9 @@ export interface OrderType {
   shippingAddress: string;
   totalAmount: number;
   status: string;
-  items: OrderItemType[];
   createdAt: string;
   updatedAt: string;
+  items: OrderItemType[];
 }
 
 export interface ShippingInfo {
