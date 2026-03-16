@@ -7,22 +7,22 @@ export class Order {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column()
   customerName!: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column()
   customerEmail!: string;
 
-  @Column({ type: 'text' })
+  @Column('text')
   shippingAddress!: string;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  @Column('decimal', { precision: 10, scale: 2 })
   totalAmount!: number;
 
-  @Column({ type: 'varchar', length: 50, default: 'pending' })
+  @Column({ default: 'pending' })
   status!: string;
 
-  @OneToMany(() => OrderItem, (item) => item.order, { cascade: true })
+  @OneToMany(() => OrderItem, (item) => item.order)
   items!: OrderItem[];
 
   @CreateDateColumn()
