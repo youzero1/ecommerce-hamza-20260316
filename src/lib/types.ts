@@ -10,6 +10,11 @@ export interface ProductType {
   updatedAt: string;
 }
 
+export interface CartItem {
+  product: ProductType;
+  quantity: number;
+}
+
 export interface OrderItemType {
   id: number;
   orderId: number;
@@ -26,13 +31,9 @@ export interface OrderType {
   shippingAddress: string;
   totalAmount: number;
   status: string;
+  items: OrderItemType[];
   createdAt: string;
-  items?: OrderItemType[];
-}
-
-export interface CartItem {
-  product: ProductType;
-  quantity: number;
+  updatedAt: string;
 }
 
 export interface ShippingInfo {
