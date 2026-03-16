@@ -13,7 +13,6 @@ interface ProductGridProps {
 export default function ProductGrid({ category, search, sort }: ProductGridProps) {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
 
   useEffect(() => {
     const params = new URLSearchParams();
@@ -21,36 +20,30 @@ export default function ProductGrid({ category, search, sort }: ProductGridProps
     if (search) params.set('search', search);
     if (sort) params.set('sort', sort);
 
-    setLoading(true);
     fetch(`/api/products?${params.toString()}`)
       .then((r) => r.json())
       .then((data) => {
         if (Array.isArray(data)) setProducts(data);
-        else setError(data.error || 'Failed to load products');
       })
-      .catch(() => setError('Failed to load products'))
+      .catch(console.error)
       .finally(() => setLoading(false));
   }, [category, search, sort]);
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {Array.from({ length: 6 }).map((_, i) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {[...Array(6)].map((_, i) => (
           <div key={i} className="card animate-pulse">
-            <div className="aspect-square bg-gray-200" />
-            <div className="p-4 space-y-2">
-              <div className="h-4 bg-gray-200 rounded w-1/3" />
-              <div className="h-5 bg-gray-200 rounded w-2/3" />
-              <div className="h-4 bg-gray-200 rounded w-full" />
+            <div className="h-48 bg-gray-200" />
+            <div className="p-4 space-y-3">
+              <div className="h-4 bg-gray-200 rounded w-3/4" />
+              <div className="h-3 bg-gray-200 rounded w-full" />
+              <div className="h-8 bg-gray-200 rounded w-1/3" />
             </div>
           </div>
         ))}
       </div>
     );
-  }
-
-  if (error) {
-    return <p className="text-red-600 text-center py-8">{error}</p>;
   }
 
   if (products.length === 0) {
@@ -62,7 +55,7 @@ export default function ProductGrid({ category, search, sort }: ProductGridProps
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
