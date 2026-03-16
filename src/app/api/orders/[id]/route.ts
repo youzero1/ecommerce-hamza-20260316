@@ -4,13 +4,14 @@ import { Order } from '@/lib/entities/Order';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const ds = await getDataSource();
     const repo = ds.getRepository(Order);
     const order = await repo.findOne({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt(id) },
       relations: ['items', 'items.product'],
     });
     if (!order) {
