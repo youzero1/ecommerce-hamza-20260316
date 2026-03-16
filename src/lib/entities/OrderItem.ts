@@ -8,16 +8,16 @@ export class OrderItem {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ type: 'int' })
+  @Column()
   orderId!: number;
 
-  @Column({ type: 'int' })
+  @Column()
   productId!: number;
 
-  @Column({ type: 'int' })
+  @Column()
   quantity!: number;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  @Column('decimal', { precision: 10, scale: 2 })
   priceAtPurchase!: number;
 
   @ManyToOne(() => Order, (order) => order.items)
