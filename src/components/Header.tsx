@@ -21,11 +21,11 @@ export default function Header() {
           </Link>
           <Link
             href="/cart"
-            className="relative text-gray-600 hover:text-gray-900 font-medium"
+            className="relative bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
           >
             🛒 Cart
             {totalItems > 0 && (
-              <span className="absolute -top-2 -right-4 bg-blue-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
                 {totalItems}
               </span>
             )}
