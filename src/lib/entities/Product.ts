@@ -1,34 +1,27 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-  OneToMany,
-} from 'typeorm';
-import { OrderItem } from './OrderItem';
+import 'reflect-metadata';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity('products')
 export class Product {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
+  @Column({ type: 'varchar' })
   name!: string;
 
-  @Column('text')
+  @Column({ type: 'text' })
   description!: string;
 
-  @Column('decimal', { precision: 10, scale: 2 })
+  @Column({ type: 'decimal', precision: 10, scale: 2 })
   price!: number;
 
-  @Column()
+  @Column({ type: 'varchar' })
   category!: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   imageUrl!: string;
 
-  @Column('int', { default: 0 })
+  @Column({ type: 'int', default: 0 })
   stock!: number;
 
   @CreateDateColumn()
@@ -36,7 +29,4 @@ export class Product {
 
   @UpdateDateColumn()
   updatedAt!: Date;
-
-  @OneToMany(() => OrderItem, (item) => item.product)
-  orderItems!: OrderItem[];
 }
