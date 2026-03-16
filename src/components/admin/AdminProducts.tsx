@@ -119,4 +119,81 @@ export default function AdminProducts() {
               value={form.price}
               onChange={(e) => setForm({ ...form, price: e.target.value })}
               className="input-field"
-              step="0.
+              step="0.01"
+              min="0"
+              required
+            />
+            <input
+              type="number"
+              placeholder="Stock"
+              value={form.stock}
+              onChange={(e) => setForm({ ...form, stock: e.target.value })}
+              className="input-field"
+              min="0"
+              required
+            />
+            <input
+              type="text"
+              placeholder="Image URL"
+              value={form.imageUrl}
+              onChange={(e) => setForm({ ...form, imageUrl: e.target.value })}
+              className="input-field md:col-span-2"
+              required
+            />
+            <textarea
+              placeholder="Description"
+              value={form.description}
+              onChange={(e) => setForm({ ...form, description: e.target.value })}
+              className="input-field md:col-span-2"
+              rows={3}
+              required
+            />
+          </div>
+          <button type="submit" className="btn-primary w-full">
+            {editingProduct ? 'Update Product' : 'Create Product'}
+          </button>
+        </form>
+      )}
+
+      <div className="overflow-x-auto">
+        <table className="w-full">
+          <thead>
+            <tr className="border-b">
+              <th className="text-left py-3 px-4">Name</th>
+              <th className="text-left py-3 px-4">Category</th>
+              <th className="text-left py-3 px-4">Price</th>
+              <th className="text-left py-3 px-4">Stock</th>
+              <th className="text-left py-3 px-4">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.map((product) => (
+              <tr key={product.id} className="border-b hover:bg-gray-50">
+                <td className="py-3 px-4">{product.name}</td>
+                <td className="py-3 px-4">{product.category}</td>
+                <td className="py-3 px-4">${Number(product.price).toFixed(2)}</td>
+                <td className="py-3 px-4">{product.stock}</td>
+                <td className="py-3 px-4">
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => handleEdit(product)}
+                      className="text-blue-600 hover:text-blue-800"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(product.id)}
+                      className="text-red-600 hover:text-red-800"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}

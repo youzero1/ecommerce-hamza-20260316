@@ -32,4 +32,20 @@ export default function ProductCard({ product }: ProductCardProps) {
           <h3 className="font-semibold text-gray-900 mt-1 hover:text-blue-600 transition-colors">
             {product.name}
           </h3>
-        </Link
+        </Link>
+        <div className="flex items-center justify-between mt-3">
+          <span className="text-lg font-bold text-gray-900">
+            ${Number(product.price).toFixed(2)}
+          </span>
+          <button
+            onClick={() => addItem(product)}
+            className="btn-primary text-sm px-3 py-1.5"
+            disabled={product.stock <= 0}
+          >
+            {product.stock > 0 ? 'Add to Cart' : 'Out of Stock'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

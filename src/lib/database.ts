@@ -1,8 +1,6 @@
 import 'reflect-metadata';
-import { DataSource } from 'typeorm';
-import { Product } from './entities/Product';
-import { Order } from './entities/Order';
-import { OrderItem } from './entities/OrderItem';
+import { DataSource, EntitySchema } from 'typeorm';
+import path from 'path';
 
 let dataSource: DataSource | null = null;
 
@@ -10,6 +8,11 @@ export async function getDataSource(): Promise<DataSource> {
   if (dataSource && dataSource.isInitialized) {
     return dataSource;
   }
+
+  // Dynamic import of entities to avoid circular dependency issues during build
+  const { Product } = await import('./entities/Product');
+  const { Order } = await import('./entities/Order');
+  const { OrderItem } = await import('./entities/OrderItem');
 
   dataSource = new DataSource({
     type: 'sqljs',
