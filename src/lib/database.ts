@@ -11,15 +11,11 @@ export async function getDataSource(): Promise<DataSource> {
     return dataSource;
   }
 
-  const initSqlJs = require('sql.js');
-  const SQL = await initSqlJs();
-
   dataSource = new DataSource({
     type: 'sqljs',
-    driver: SQL,
     synchronize: true,
-    logging: false,
     entities: [Product, Order, OrderItem],
+    logging: false,
   });
 
   await dataSource.initialize();
@@ -31,7 +27,7 @@ export async function getDataSource(): Promise<DataSource> {
     const seedProducts = [
       {
         name: 'Wireless Headphones',
-        description: 'Premium wireless headphones with noise cancellation and 30-hour battery life.',
+        description: 'Premium noise-cancelling wireless headphones with 30-hour battery life.',
         price: 79.99,
         category: 'Electronics',
         imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500',
@@ -40,14 +36,14 @@ export async function getDataSource(): Promise<DataSource> {
       {
         name: 'Running Shoes',
         description: 'Lightweight and comfortable running shoes for everyday training.',
-        price: 129.99,
+        price: 119.99,
         category: 'Sports',
         imageUrl: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500',
         stock: 30,
       },
       {
         name: 'Coffee Maker',
-        description: 'Automatic drip coffee maker with programmable timer and thermal carafe.',
+        description: 'Programmable drip coffee maker with thermal carafe.',
         price: 49.99,
         category: 'Home',
         imageUrl: 'https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=500',
@@ -55,7 +51,7 @@ export async function getDataSource(): Promise<DataSource> {
       },
       {
         name: 'Backpack',
-        description: 'Durable laptop backpack with multiple compartments and USB charging port.',
+        description: 'Durable water-resistant backpack with laptop compartment.',
         price: 59.99,
         category: 'Accessories',
         imageUrl: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500',
@@ -63,7 +59,7 @@ export async function getDataSource(): Promise<DataSource> {
       },
       {
         name: 'Smart Watch',
-        description: 'Feature-rich smartwatch with health monitoring and GPS tracking.',
+        description: 'Feature-rich smartwatch with health monitoring and GPS.',
         price: 199.99,
         category: 'Electronics',
         imageUrl: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500',
@@ -71,8 +67,8 @@ export async function getDataSource(): Promise<DataSource> {
       },
       {
         name: 'Yoga Mat',
-        description: 'Extra thick non-slip yoga mat with carrying strap.',
-        price: 34.99,
+        description: 'Extra thick non-slip yoga mat for comfortable practice.',
+        price: 29.99,
         category: 'Sports',
         imageUrl: 'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=500',
         stock: 60,
