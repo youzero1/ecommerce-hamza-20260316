@@ -19,12 +19,13 @@ export default function ShippingStep({ data, onChange, onNext }: ShippingStepPro
   };
 
   return (
-    <form onSubmit={handleSubmit} className="card p-6 space-y-4">
-      <h2 className="text-xl font-bold">Shipping Information</h2>
+    <form onSubmit={handleSubmit} className="card p-6">
+      <h2 className="text-xl font-bold mb-6">Shipping Information</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
           <input
+            type="text"
             required
             value={data.firstName}
             onChange={(e) => update('firstName', e.target.value)}
@@ -34,36 +35,37 @@ export default function ShippingStep({ data, onChange, onNext }: ShippingStepPro
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
           <input
+            type="text"
             required
             value={data.lastName}
             onChange={(e) => update('lastName', e.target.value)}
             className="input-field"
           />
         </div>
-      </div>
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-        <input
-          required
-          type="email"
-          value={data.email}
-          onChange={(e) => update('email', e.target.value)}
-          className="input-field"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
-        <input
-          required
-          value={data.address}
-          onChange={(e) => update('address', e.target.value)}
-          className="input-field"
-        />
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="md:col-span-2">
+          <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+          <input
+            type="email"
+            required
+            value={data.email}
+            onChange={(e) => update('email', e.target.value)}
+            className="input-field"
+          />
+        </div>
+        <div className="md:col-span-2">
+          <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+          <input
+            type="text"
+            required
+            value={data.address}
+            onChange={(e) => update('address', e.target.value)}
+            className="input-field"
+          />
+        </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
           <input
+            type="text"
             required
             value={data.city}
             onChange={(e) => update('city', e.target.value)}
@@ -73,6 +75,7 @@ export default function ShippingStep({ data, onChange, onNext }: ShippingStepPro
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">State</label>
           <input
+            type="text"
             required
             value={data.state}
             onChange={(e) => update('state', e.target.value)}
@@ -82,16 +85,31 @@ export default function ShippingStep({ data, onChange, onNext }: ShippingStepPro
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">ZIP Code</label>
           <input
+            type="text"
             required
             value={data.zipCode}
             onChange={(e) => update('zipCode', e.target.value)}
             className="input-field"
           />
         </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
+          <select
+            value={data.country}
+            onChange={(e) => update('country', e.target.value)}
+            className="input-field"
+          >
+            <option value="US">United States</option>
+            <option value="CA">Canada</option>
+            <option value="UK">United Kingdom</option>
+          </select>
+        </div>
       </div>
-      <button type="submit" className="btn-primary w-full py-3">
-        Continue to Payment
-      </button>
+      <div className="mt-6 flex justify-end">
+        <button type="submit" className="btn-primary px-8 py-3">
+          Continue to Payment
+        </button>
+      </div>
     </form>
   );
 }
