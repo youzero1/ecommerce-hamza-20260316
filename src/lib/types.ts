@@ -15,24 +15,6 @@ export interface CartItem {
   quantity: number;
 }
 
-export interface ShippingInfo {
-  firstName: string;
-  lastName: string;
-  email: string;
-  address: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  country: string;
-}
-
-export interface PaymentInfo {
-  cardNumber: string;
-  cardName: string;
-  expiry: string;
-  cvv: string;
-}
-
 export interface OrderItemType {
   id: number;
   orderId: number;
@@ -52,4 +34,22 @@ export interface OrderType {
   items: OrderItemType[];
   createdAt: string;
   updatedAt: string;
+}
+
+export interface ShippingInfo {
+  firstName: string;
+  lastName: string;
+  email: string;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  country: string;
+}
+
+export interface PaymentInfo {
+  cardNumber: string;
+  cardName: string;
+  expiry: string;
+  cvv: string;
 }
