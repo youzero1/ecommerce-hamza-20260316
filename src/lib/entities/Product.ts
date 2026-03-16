@@ -6,22 +6,22 @@ export class Product {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column()
   name!: string;
 
-  @Column({ type: 'text' })
+  @Column('text')
   description!: string;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  @Column('decimal', { precision: 10, scale: 2 })
   price!: number;
 
-  @Column({ type: 'varchar', length: 100 })
+  @Column()
   category!: string;
 
-  @Column({ type: 'varchar', length: 500 })
+  @Column()
   imageUrl!: string;
 
-  @Column({ type: 'int', default: 0 })
+  @Column({ default: 0 })
   stock!: number;
 
   @CreateDateColumn()
