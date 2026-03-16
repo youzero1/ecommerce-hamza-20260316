@@ -16,7 +16,6 @@ export default function ProductGrid({ category, search, sort }: ProductGridProps
   const [error, setError] = useState('');
 
   useEffect(() => {
-    setLoading(true);
     const params = new URLSearchParams();
     if (category) params.set('category', category);
     if (search) params.set('search', search);
@@ -26,7 +25,7 @@ export default function ProductGrid({ category, search, sort }: ProductGridProps
       .then((r) => r.json())
       .then((data) => {
         if (Array.isArray(data)) setProducts(data);
-        else setError('Failed to load products');
+        else setError(data.error || 'Failed to load products');
       })
       .catch(() => setError('Failed to load products'))
       .finally(() => setLoading(false));
@@ -35,17 +34,13 @@ export default function ProductGrid({ category, search, sort }: ProductGridProps
   if (loading) {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {Array.from({ length: 6 }).map((_, i) => (
+        {[...Array(6)].map((_, i) => (
           <div key={i} className="card animate-pulse">
-            <div className="aspect-square bg-gray-200"></div>
+            <div className="aspect-square bg-gray-200" />
             <div className="p-4 space-y-3">
-              <div className="h-3 bg-gray-200 rounded w-1/3"></div>
-              <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-              <div className="h-3 bg-gray-200 rounded w-full"></div>
-              <div className="flex justify-between">
-                <div className="h-5 bg-gray-200 rounded w-1/4"></div>
-                <div className="h-8 bg-gray-200 rounded w-1/4"></div>
-              </div>
+              <div className="h-4 bg-gray-200 rounded w-1/3" />
+              <div className="h-5 bg-gray-200 rounded w-2/3" />
+              <div className="h-4 bg-gray-200 rounded w-full" />
             </div>
           </div>
         ))}
@@ -54,11 +49,7 @@ export default function ProductGrid({ category, search, sort }: ProductGridProps
   }
 
   if (error) {
-    return (
-      <div className="text-center py-12">
-        <p className="text-red-600">{error}</p>
-      </div>
-    );
+    return <p className="text-red-600 text-center py-8">{error}</p>;
   }
 
   if (products.length === 0) {
@@ -70,13 +61,10 @@ export default function ProductGrid({ category, search, sort }: ProductGridProps
   }
 
   return (
-    <div>
-      <p className="text-sm text-gray-500 mb-4">{products.length} product{products.length !== 1 ? 's' : ''} found</p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {products.map((p) => (
-          <ProductCard key={p.id} product={p} />
-        ))}
-      </div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} />
+      ))}
     </div>
   );
 }
