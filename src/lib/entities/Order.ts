@@ -7,10 +7,10 @@ export class Order {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', length: 255 })
   customerName!: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', length: 255 })
   customerEmail!: string;
 
   @Column({ type: 'text' })
@@ -19,7 +19,7 @@ export class Order {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   totalAmount!: number;
 
-  @Column({ type: 'varchar', default: 'pending' })
+  @Column({ type: 'varchar', length: 50, default: 'pending' })
   status!: string;
 
   @OneToMany(() => OrderItem, (item) => item.order, { cascade: true })
