@@ -1,18 +1,24 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useState, FormEvent } from 'react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
-export default function SearchBar({ defaultValue }: { defaultValue?: string }) {
+interface SearchBarProps {
+  defaultValue?: string;
+}
+
+export default function SearchBar({ defaultValue = '' }: SearchBarProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const [value, setValue] = useState(defaultValue || '');
+  const [value, setValue] = useState(defaultValue);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const params = new URLSearchParams(searchParams.toString());
-    if (value.trim()) params.set('search', value.trim());
-    else params.delete('search');
+    const params = new URLSearchParams(window.location.search);
+    if (value) {
+      params.set('search', value);
+    } else {
+      params.delete('search');
+    }
     router.push(`/?${params.toString()}`);
   };
 
@@ -23,9 +29,9 @@ export default function SearchBar({ defaultValue }: { defaultValue?: string }) {
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder="Search products..."
-        className="input-field"
+        className="input-field flex-1"
       />
-      <button type="submit" className="btn-primary px-6 whitespace-nowrap">
+      <button type="submit" className="btn-primary">
         Search
       </button>
     </form>
