@@ -5,14 +5,16 @@ import SearchBar from '@/components/SearchBar';
 import SortSelect from '@/components/SortSelect';
 
 interface HomeProps {
-  searchParams: {
+  searchParams: Promise<{
     category?: string;
     search?: string;
     sort?: string;
-  };
+  }>;
 }
 
-export default function HomePage({ searchParams }: HomeProps) {
+export default async function HomePage({ searchParams }: HomeProps) {
+  const resolvedSearchParams = await searchParams;
+
   return (
     <div>
       {/* Hero Section */}
@@ -37,22 +39,22 @@ export default function HomePage({ searchParams }: HomeProps) {
       <section id="products" className="max-w-6xl mx-auto px-4 py-12">
         <div className="flex flex-col md:flex-row gap-4 mb-8">
           <div className="flex-1">
-            <SearchBar defaultValue={searchParams.search} />
+            <SearchBar defaultValue={resolvedSearchParams.search} />
           </div>
           <div className="flex gap-3">
-            <SortSelect defaultValue={searchParams.sort} />
+            <SortSelect defaultValue={resolvedSearchParams.sort} />
           </div>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8">
           <aside className="lg:w-64 flex-shrink-0">
-            <CategoryFilter activeCategory={searchParams.category} />
+            <CategoryFilter activeCategory={resolvedSearchParams.category} />
           </aside>
           <div className="flex-1">
             <ProductGrid
-              category={searchParams.category}
-              search={searchParams.search}
-              sort={searchParams.sort}
+              category={resolvedSearchParams.category}
+              search={resolvedSearchParams.search}
+              sort={resolvedSearchParams.sort}
             />
           </div>
         </div>
