@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 interface SortSelectProps {
   defaultValue?: string;
@@ -8,10 +8,9 @@ interface SortSelectProps {
 
 export default function SortSelect({ defaultValue = 'newest' }: SortSelectProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams(window.location.search);
     params.set('sort', e.target.value);
     router.push(`/?${params.toString()}`);
   };
@@ -20,12 +19,12 @@ export default function SortSelect({ defaultValue = 'newest' }: SortSelectProps)
     <select
       defaultValue={defaultValue}
       onChange={handleChange}
-      className="input-field"
+      className="input-field w-auto"
     >
       <option value="newest">Newest</option>
       <option value="price-asc">Price: Low to High</option>
       <option value="price-desc">Price: High to Low</option>
-      <option value="name-asc">Name: A to Z</option>
+      <option value="name-asc">Name: A-Z</option>
     </select>
   );
 }
