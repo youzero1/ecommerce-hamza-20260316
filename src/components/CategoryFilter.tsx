@@ -1,51 +1,42 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 
-const CATEGORIES = ['Electronics', 'Clothing', 'Home & Kitchen', 'Books'];
+const CATEGORIES = ['Electronics', 'Sports', 'Food', 'Accessories'];
 
-export default function CategoryFilter({ activeCategory }: { activeCategory?: string }) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+interface CategoryFilterProps {
+  activeCategory?: string;
+}
 
-  const handleCategory = (cat?: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (cat) params.set('category', cat);
-    else params.delete('category');
-    router.push(`/?${params.toString()}`);
-  };
-
+export default function CategoryFilter({ activeCategory }: CategoryFilterProps) {
   return (
     <div className="card p-4">
       <h3 className="font-semibold text-gray-900 mb-3">Categories</h3>
-      <ul className="space-y-1">
-        <li>
-          <button
-            onClick={() => handleCategory()}
-            className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
-              !activeCategory
-                ? 'bg-blue-600 text-white'
-                : 'text-gray-600 hover:bg-gray-100'
+      <div className="space-y-1">
+        <Link
+          href="/"
+          className={`block px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+            !activeCategory
+              ? 'bg-blue-50 text-blue-700'
+              : 'text-gray-600 hover:bg-gray-50'
+          }`}
+        >
+          All Products
+        </Link>
+        {CATEGORIES.map((cat) => (
+          <Link
+            key={cat}
+            href={`/?category=${cat}`}
+            className={`block px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+              activeCategory === cat
+                ? 'bg-blue-50 text-blue-700'
+                : 'text-gray-600 hover:bg-gray-50'
             }`}
           >
-            All Products
-          </button>
-        </li>
-        {CATEGORIES.map((cat) => (
-          <li key={cat}>
-            <button
-              onClick={() => handleCategory(cat)}
-              className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
-                activeCategory === cat
-                  ? 'bg-blue-600 text-white'
-                  : 'text-gray-600 hover:bg-gray-100'
-              }`}
-            >
-              {cat}
-            </button>
-          </li>
+            {cat}
+          </Link>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
