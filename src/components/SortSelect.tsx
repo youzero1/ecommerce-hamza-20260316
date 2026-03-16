@@ -1,35 +1,30 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
-const SORT_OPTIONS = [
-  { value: 'newest', label: 'Newest' },
-  { value: 'price-asc', label: 'Price: Low to High' },
-  { value: 'price-desc', label: 'Price: High to Low' },
-  { value: 'name-asc', label: 'Name: A-Z' },
-];
+interface SortSelectProps {
+  defaultValue?: string;
+}
 
-export default function SortSelect({ defaultValue }: { defaultValue?: string }) {
+export default function SortSelect({ defaultValue = 'newest' }: SortSelectProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams(window.location.search);
     params.set('sort', e.target.value);
     router.push(`/?${params.toString()}`);
   };
 
   return (
     <select
+      defaultValue={defaultValue}
       onChange={handleChange}
-      defaultValue={defaultValue || 'newest'}
-      className="input-field min-w-[180px]"
+      className="input-field"
     >
-      {SORT_OPTIONS.map((opt) => (
-        <option key={opt.value} value={opt.value}>
-          {opt.label}
-        </option>
-      ))}
+      <option value="newest">Newest</option>
+      <option value="price-asc">Price: Low to High</option>
+      <option value="price-desc">Price: High to Low</option>
+      <option value="name-asc">Name: A-Z</option>
     </select>
   );
 }
