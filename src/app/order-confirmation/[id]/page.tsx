@@ -12,7 +12,7 @@ export default function OrderConfirmationPage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (params.id) {
+    if (params?.id) {
       fetch(`/api/orders/${params.id}`)
         .then((r) => r.json())
         .then((data) => {
@@ -22,7 +22,7 @@ export default function OrderConfirmationPage() {
         .catch(() => setError('Failed to load order'))
         .finally(() => setLoading(false));
     }
-  }, [params.id]);
+  }, [params?.id]);
 
   if (loading) {
     return (

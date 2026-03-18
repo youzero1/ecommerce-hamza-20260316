@@ -4,6 +4,8 @@ import CategoryFilter from '@/components/CategoryFilter';
 import SearchBar from '@/components/SearchBar';
 import SortSelect from '@/components/SortSelect';
 
+export const dynamic = 'force-dynamic';
+
 interface HomeProps {
   searchParams: Promise<{
     category?: string;

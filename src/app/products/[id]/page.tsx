@@ -16,7 +16,7 @@ export default function ProductDetailPage() {
   const [added, setAdded] = useState(false);
 
   useEffect(() => {
-    if (params.id) {
+    if (params?.id) {
       fetch(`/api/products/${params.id}`)
         .then((r) => r.json())
         .then((data) => {
@@ -25,7 +25,7 @@ export default function ProductDetailPage() {
         .catch(console.error)
         .finally(() => setLoading(false));
     }
-  }, [params.id]);
+  }, [params?.id]);
 
   const handleAddToCart = () => {
     if (product) {
